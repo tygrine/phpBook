@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Like;
+use App\Notifications\Notify;
 
 class ForumController extends Controller
 {
@@ -75,10 +76,19 @@ class ForumController extends Controller
             $like->update();
         } else {
             $like->save();
+            return $this->notify($post_id, $is_like);
         }
 
         dd($request['isLiked'], $is_like, $user->id, $post->id);
 
         return response()->json(['message'=>'Entry saved.']);
+    }
+
+    public function notify($post_id, $is_like)
+    {
+        $post = Post::find($post_id);
+        $current_user = Auth::user();
+        $post->user->notify(new Notify($post));
+        dd($post_id, $is_like, $current_user);
     }
 }

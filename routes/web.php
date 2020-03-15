@@ -28,4 +28,7 @@ Route::post('/forum', 'ForumController@store')->name('store');
 
 Route::post('/like', 'ForumController@like')->name('like');
 
+Route::post('/notification/get', 'NotificationController@get');
+Route::post('/notification/read', 'NotificationController@read');
+
 Route::get('/profile/{user}', 'ProfileController@index')->name('profile.show');
