@@ -1,0 +1,154 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20200314.002916.21392.0.001.json",
+    "dumpEventTime": "2020-03-14T00:29:18Z",
+    "dumpEventTimeStamp": "1584116958739",
+    "processId": 21392,
+    "cwd": "C:\\wamp64\\www\\PHPBook",
+    "commandLine": [
+      "node",
+      "C:\\wamp64\\www\\PHPBook\\node_modules\\.bin\\\\..\\nodemon\\bin\\nodemon.js",
+      "app.js",
+      "app.js",
+      "app.js",
+      "app.js",
+      "app.js",
+      "app.js",
+      "app.js",
+      "app.js",
+      "app.js",
+      "app.js",
+      "app.js",
+      "app.js",
+      "app.js"
+    ],
+    "nodejsVersion": "v12.16.1",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "12.16.1",
+      "v8": "7.8.279.23-node.31",
+      "uv": "1.34.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.40.0",
+      "napi": "5",
+      "llhttp": "2.0.4",
+      "http_parser": "2.9.3",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019c",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.16.1/node-v12.16.1-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.16.1/node-v12.16.1.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v12.16.1/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.17134",
+    "osVersion": "Windows 10 Pro",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz",
+        "speed": 3408,
+        "user": 26507187,
+        "nice": 0,
+        "sys": 26120968,
+        "idle": 316747343,
+        "irq": 10629531
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz",
+        "speed": 3408,
+        "user": 27865906,
+        "nice": 0,
+        "sys": 13308656,
+        "idle": 328200750,
+        "irq": 631921
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz",
+        "speed": 3408,
+        "user": 31653078,
+        "nice": 0,
+        "sys": 12794359,
+        "idle": 324927890,
+        "irq": 243171
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-7500 CPU @ 3.40GHz",
+        "speed": 3408,
+        "user": 35353218,
+        "nice": 0,
+        "sys": 13958156,
+        "idle": 320063921,
+        "irq": 219859
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "VirtualBox Host-Only Network",
+        "internal": false,
+        "mac": "0a:00:27:00:00:10",
+        "address": "fe80::e905:d689:b6bd:267",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 16
+      },
+      {
+        "name": "VirtualBox Host-Only Network",
+        "internal": false,
+        "mac": "0a:00:27:00:00:10",
+        "address": "192.168.56.1",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "WiFi",
+        "internal": false,
+        "mac": "1c:87:2c:b7:da:57",
+        "address": "2406:3003:2004:177:d504:e32e:be95:8a59",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "WiFi",
+        "internal": false,
+        "mac": "1c:87:2c:b7:da:57",
+        "address": "2406:3003:2004:177:f8f1:ec72:8595:4198",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "WiFi",
+        "internal": false,
+        "mac": "1c:87:2c:b7:da:57",
+        "address": "fe80::d504:e32e:be95:8a59",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 20
+      },
+      {
+        "name": "WiFi",
+        "internal": false,
+        "mac": "1c:87:2c:b7:da:57",
+        "address": "192.168.1.107",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "Loopback Pseudo-Inte
