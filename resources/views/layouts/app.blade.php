@@ -53,7 +53,7 @@
                                 </li>
                             @endif
                         @else
-                            <notification v-bind:userid="{{ auth()->id() }}" v-bind:notifications="notifications"></notification>
+                            <notification v-bind:notifications="notifications"></notification>
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

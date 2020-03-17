@@ -10891,3 +10891,8 @@ a.text-dark:focus {
   line-height: 50px;
 }
 
+textarea {
+  min-height: 50px;
+  max-height: 200px;
+}
+

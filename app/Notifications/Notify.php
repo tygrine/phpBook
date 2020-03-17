@@ -18,9 +18,11 @@ class Notify extends Notification
      *
      * @return void
      */
-    public function __construct(Post $post)
+    public function __construct(Post $post, $is_like, $is_replied)
     {
         $this->post = $post;
+        $this->is_replied = $is_replied;
+        $this->is_like = $is_like;
     }
 
     /**
@@ -44,15 +46,21 @@ class Notify extends Notification
     {
         return [
             'post' => $this->post,
-            'user' => auth()->user()
+            'user' => auth()->user(),
+            'reply' => $this->is_replied,
+            'like' => $this->is_like
         ];
     }
 
     public function toBroadcast($notifiable)
     {
         return [
-            'post' => $this->post,
-            'user' => auth()->user()
+            'data' => [
+                'post' => $this->post,
+                'user' => auth()->user(),
+                'reply' => $this->is_replied,
+                'like' => $this->is_like
+            ]
         ];
     }
 

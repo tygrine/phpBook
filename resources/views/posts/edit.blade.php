@@ -2,17 +2,20 @@
 
 @section('content')
 <div class="container">
-    <form action="/forum" enctype="multipart/form-data" method="post">
+    <div class="col-7">
+    <a href="/forum" class="btn btn-outline-primary">Back</a>
+    </div>
+    <form action="/forum/edit/{{$post->id}}" enctype="multipart/form-data" method="post">
         @csrf
         <div class="row">
             <div class="col-8 offset-2">
             <div class="row">
-            <h2>Create a new post</h2>
+            <h2>Edit Post</h2>
             </div>
 
             <div class="form-group row">
                 <label for="post-title">Post Title</label>
-                <input type="text" name="post-title" class="form-control @error('post-title') is-invalid @enderror" id="post-title" placeholder="Post Title">
+            <input type="text" name="post-title" class="form-control @error('post-title') is-invalid @enderror" id="post-title" placeholder="Post Title" value="{{$post->post_title}}">
                 
                 @error('post-title')
                 <span class="invalid-feedback" role="alert">
@@ -23,7 +26,7 @@
 
             <div class="form-group row">
                 <label for="post-description">Post Description</label>
-                <textarea class="form-control @error('post-description') is-invalid @enderror" name="post-description" id="post-description" rows="5" placeholder="Type something here..."></textarea>
+                <textarea class="form-control @error('post-description') is-invalid @enderror" name="post-description" id="post-description" rows="5" placeholder="Type something here...">{{$post->post_description}}</textarea>
                 
                 @error('post-description')
                 <span class="invalid-feedback" role="alert">
@@ -33,6 +36,7 @@
             </div>
 
             <div class="row">
+                <input type="hidden" name="_method" value="PUT">
                 <button type="submit" class="btn btn-outline-primary">Submit</button>
             </div>
         </div>

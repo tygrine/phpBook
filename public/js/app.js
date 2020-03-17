@@ -1928,8 +1928,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['notifications', 'userid'],
+  props: ['notifications'],
   methods: {
     MarkAsRead: function MarkAsRead(notification) {
       var data = {
@@ -47248,30 +47263,70 @@ var render = function() {
       "ul",
       { staticClass: "dropdown-menu", attrs: { role: "menu" } },
       [
-        _vm._l(_vm.notifications, function(notification) {
-          return _c("li", [
-            _c(
-              "a",
-              {
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    return _vm.MarkAsRead(notification)
-                  }
-                }
-              },
-              [
-                _vm._v(
-                  "\n                " +
-                    _vm._s(notification.data.user.name) +
-                    " has liked your post. "
-                ),
-                _c("br"),
-                _vm._v(" "),
-                _c("small", [_vm._v(_vm._s(notification.data.post.post_title))])
-              ]
-            )
-          ])
+        _vm._l(_vm.notifications, function(notification, index) {
+          return notification.data.like == true
+            ? _c("li", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "dropdown-item",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.MarkAsRead(notification)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(notification.data.user.name) +
+                        " has liked your post. "
+                    ),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("small", [
+                      _vm._v(_vm._s(notification.data.post.post_title))
+                    ])
+                  ]
+                )
+              ])
+            : _vm._e()
+        }),
+        _vm._v(" "),
+        _vm._l(_vm.notifications, function(notification, index) {
+          return notification.data.reply == true
+            ? _c("li", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "dropdown-item",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        return _vm.MarkAsRead(notification)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-comments fa-xs",
+                      attrs: { "aria-hidden": "true" }
+                    }),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(notification.data.user.name) +
+                        " has replied to your post. "
+                    ),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("small", [
+                      _vm._v(_vm._s(notification.data.post.post_title))
+                    ])
+                  ]
+                )
+              ])
+            : _vm._e()
         }),
         _vm._v(" "),
         _vm.notifications.length == 0
@@ -47280,7 +47335,16 @@ var render = function() {
                 "\n                No new notifications to show.\n            "
               )
             ])
-          : _vm._e()
+          : _c("li", [
+              _c(
+                "a",
+                {
+                  staticClass: "d-flex justify-content-center",
+                  attrs: { href: "#" }
+                },
+                [_vm._v("Clear all")]
+              )
+            ])
       ],
       2
     )
@@ -59461,6 +59525,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./forum.blade */ "./resources/js/forum.blade.js");
 
+__webpack_require__(/*! ./show.blade */ "./resources/js/show.blade.js");
+
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.component('notification', __webpack_require__(/*! ./components/Notification.vue */ "./resources/js/components/Notification.vue")["default"]);
 var app = new Vue({
@@ -59472,11 +59538,14 @@ var app = new Vue({
     var _this = this;
 
     axios.post('/notification/get').then(function (response) {
-      _this.notifications = response.data;
+      $data = _this.notifications = response.data;
+      $like = $data.filter(function (data) {
+        return data.like === 'true';
+      });
     });
     var userid = $('meta[name="userid"]').attr('content');
     Echo["private"]('App.User.' + userid).notification(function (notification) {
-      console.log(notification);
+      _this.notifications.push(notification);
     });
   }
 });
@@ -59662,6 +59731,21 @@ $(document).ready(function () {
         }
       }
     });
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/show.blade.js":
+/*!************************************!*\
+  !*** ./resources/js/show.blade.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  $('#btn-postdel').on(click, function () {
+    alert('asdasd');
   });
 });
 

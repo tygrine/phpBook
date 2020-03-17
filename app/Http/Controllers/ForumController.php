@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Like;
+use App\Comment;
 use App\Notifications\Notify;
 
 class ForumController extends Controller
@@ -18,7 +19,7 @@ class ForumController extends Controller
 
     public function index()
     {
-        $posts = Post::orderBy('created_at','desc')->get();
+        $posts = Post::orderBy('created_at','desc')->paginate(4);
         return view('forum', ['posts' => $posts]);
     }
 
@@ -27,21 +28,67 @@ class ForumController extends Controller
         return view('posts.create');
     }
 
+    public function show($post_id)
+    {
+        $post = Post::find($post_id);
+        $post->comments = Comment::query()->where('post_id', $post_id)->orderBy('created_at','desc')->paginate(4);
+        return view('posts.show')->with('post', $post);
+    }
+
     public function store()
     {
         $data = request()->validate([
             'post-title' => 'required',
-            'tags' => '',
             'post-description' => 'required',
         ]);
 
         auth()->user()->posts()->create([
             'post_title' => $data['post-title'],
-            'tags' => $data['tags'],
             'post_description' => $data['post-description'],
         ]);
 
-        return redirect('/forum/');
+        return redirect('forum')->with('Success', 'Post created successfully.');
+    }
+
+    public function edit($post_id)
+    {
+        $post = Post::find($post_id);
+
+        // Checks if authenticated user is the post author to allow an edit
+        if(Auth::User() != $post->user) {
+            return redirect()->back();
+        }
+
+        return view('posts.edit')->with('post', $post);
+    }
+
+    public function update(Request $request, $post_id)
+    {
+        $data = request()->validate([
+            'post-title' => 'required',
+            'post-description' => 'required',
+        ]);
+
+        auth()->user()->posts()->update([
+            'post_title' => $data['post-title'],
+            'post_description' => $data['post-description'],
+        ]);
+
+        return redirect('forum')->with('Success', 'Post updated successfully.');
+    }
+
+    public function delete($post_id)
+    {
+        $post = Post::find($post_id);
+
+        // Checks if authenticated user is the post author to allow a delete
+        if(Auth::User() != $post->user) {
+            return redirect()->back();
+        }
+
+        $post->delete();
+
+        return redirect('forum')->with(['Success' => 'Post deleted successfully']);
     }
 
     public function like(Request $request)
@@ -63,7 +110,6 @@ class ForumController extends Controller
             $update = true;
             if ($already_like == $is_like) {
                 $like->delete();
-                return response()->json(['message'=>'Like entry deleted']);
             }
         } else {
             $like = new Like();
@@ -88,7 +134,8 @@ class ForumController extends Controller
     {
         $post = Post::find($post_id);
         $current_user = Auth::user();
-        $post->user->notify(new Notify($post));
+        $is_replied = false;
+        $post->user->notify(new Notify($post, $is_like, $is_replied));
         dd($post_id, $is_like, $current_user);
     }
 }

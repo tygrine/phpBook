@@ -1,5 +1,6 @@
 require('./bootstrap');
 require('./forum.blade');
+require('./show.blade');
 
 window.Vue = require('vue');
 
@@ -12,12 +13,13 @@ const app = new Vue({
     },
     created() {
         axios.post('/notification/get').then(response => {
-            this.notifications = response.data
+            $data = this.notifications = response.data;
+            $like = $data.filter(data=> data.like === 'true');
         });
 
         var userid = $('meta[name="userid"]').attr('content');
         Echo.private('App.User.' + userid).notification((notification) => {
-            console.log(notification);
+            this.notifications.push(notification)
         });
-    }
+    },
 });
