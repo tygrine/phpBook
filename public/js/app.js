@@ -59717,10 +59717,10 @@ $(document).ready(function () {
       url: '/like',
       contentType: "application/json;charset=utf-8",
       success: function success() {
-        console.log('success');
+        console.log('Success');
       },
       error: function error() {
-        console.log('error!');
+        console.log('Error!');
       }
     }).done(function () {
       if (isLiked) {

@@ -32,10 +32,10 @@ $(document).ready(function(){
             url: '/like',
             contentType: "application/json;charset=utf-8",
             success: function(){
-                console.log('success');
+                console.log('Success');
             },
             error: function(){
-                console.log('error!');
+                console.log('Error!');
             } 
         })
             .done(function(){

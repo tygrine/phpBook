@@ -44,7 +44,7 @@ class ForumController extends Controller
     public function store()
     {
         $data = request()->validate([
-            'post-title' => 'required',
+            'post-title' => 'required|max:50',
             'post-description' => 'required',
         ]);
 
@@ -115,7 +115,7 @@ class ForumController extends Controller
         
         $post = Post::find($post_id);
          if (!$post) {
-             return response()->json(['message'=>'No post.']);
+             return redirect('forum');
         }
 
         $user = Auth::user();
@@ -134,6 +134,7 @@ class ForumController extends Controller
         $like->like = $is_like;
         $like->user_id = $user->id;
         $like->post_id = $post->id;
+
         if ($update) {
             $like->update();
         } else {
@@ -141,9 +142,7 @@ class ForumController extends Controller
             return $this->notify($post_id, $is_like);
         }
 
-        dd($request['isLiked'], $is_like, $user->id, $post->id);
-
-        return response()->json(['message'=>'Entry saved.']);
+        dd($request['isLiked'], $is_like, $user->id);
     }
 
     public function notify($post_id, $is_like)
@@ -151,6 +150,12 @@ class ForumController extends Controller
         $post = Post::find($post_id);
         $current_user = Auth::user();
         $is_replied = false;
+
+        // No notification if the user has disliked the post and pressed again to remove it
+        if ($is_like == false) {
+            return;
+        }
+
         $post->user->notify(new Notify($post, $is_like, $is_replied));
         dd($post_id, $is_like, $current_user);
     }
