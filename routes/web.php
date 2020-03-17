@@ -40,6 +40,7 @@ Route::get('/comments/delete/{comment_id}', 'CommentsController@delete')->name('
 // Notifications
 Route::post('/notification/get', 'NotificationController@get');
 Route::post('/notification/read', 'NotificationController@read');
+Route::post('/notification/clear', 'NotificationController@clear');
 
-// Profile
-Route::get('/profile/{user}', 'ProfileController@index')->name('profile.show');
+//Error
+Route::get('/error', 'HomeController@error')->name('error');

@@ -1941,8 +1941,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['notifications'],
   methods: {
@@ -1950,8 +1948,12 @@ __webpack_require__.r(__webpack_exports__);
       var data = {
         id: notification.id
       };
-      axios.post('/notification/read', data).then(function (response) {
-        console.log('Notification cleared');
+      axios.post('/notification/read', data);
+    },
+    MarkAllAsRead: function MarkAllAsRead() {
+      axios.post('/notification/clear').then(function (response) {
+        location.reload();
+        return false;
       });
     }
   }
@@ -47270,7 +47272,9 @@ var render = function() {
                   "a",
                   {
                     staticClass: "dropdown-item",
-                    attrs: { href: "#" },
+                    attrs: {
+                      href: "/forum/show/" + notification.data.post.id + "/"
+                    },
                     on: {
                       click: function($event) {
                         return _vm.MarkAsRead(notification)
@@ -47278,8 +47282,9 @@ var render = function() {
                     }
                   },
                   [
+                    _c("i", { staticClass: "fas fa-thumbs-up fa-xs" }),
                     _vm._v(
-                      "\n                " +
+                      " " +
                         _vm._s(notification.data.user.name) +
                         " has liked your post. "
                     ),
@@ -47301,7 +47306,9 @@ var render = function() {
                   "a",
                   {
                     staticClass: "dropdown-item",
-                    attrs: { href: "#" },
+                    attrs: {
+                      href: "/forum/show/" + notification.data.post.id + "/"
+                    },
                     on: {
                       click: function($event) {
                         return _vm.MarkAsRead(notification)
@@ -47309,14 +47316,11 @@ var render = function() {
                     }
                   },
                   [
-                    _c("i", {
-                      staticClass: "fa fa-comments fa-xs",
-                      attrs: { "aria-hidden": "true" }
-                    }),
+                    _c("i", { staticClass: "fas fa-comments fa-xs" }),
                     _vm._v(
-                      "\n                " +
+                      " " +
                         _vm._s(notification.data.user.name) +
-                        " has replied to your post. "
+                        " has commented on your post. "
                     ),
                     _c("br"),
                     _vm._v(" "),
@@ -47331,16 +47335,21 @@ var render = function() {
         _vm._v(" "),
         _vm.notifications.length == 0
           ? _c("li", [
-              _vm._v(
-                "\n                No new notifications to show.\n            "
-              )
+              _c("div", { staticClass: "dropdown-item disabled" }, [
+                _vm._v("No new notifications to show.")
+              ])
             ])
           : _c("li", [
               _c(
                 "a",
                 {
                   staticClass: "d-flex justify-content-center",
-                  attrs: { href: "#" }
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      return _vm.MarkAllAsRead()
+                    }
+                  }
                 },
                 [_vm._v("Clear all")]
               )
@@ -59678,6 +59687,16 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports) {
 
 $(document).ready(function () {
+  //Every 2nd post has a blue border
+  $(".card:odd").addClass('border-info');
+  $(".add-post").popover('show');
+  $('body').on('click', function (e) {
+    //only buttons
+    if ($(e.target).data('toggle') !== 'popover' && $(e.target).parents('.popover.in').length === 0) {
+      $('[data-toggle="popover"]').popover('hide');
+      $('[data-toggle="popover"]').popover('disable');
+    }
+  });
   $.ajaxSetup({
     beforeSend: function beforeSend(xhr, type) {
       if (!type.crossDomain) {
@@ -59687,9 +59706,8 @@ $(document).ready(function () {
   });
   $('.like').on('click', function (event) {
     event.preventDefault();
-    console.log('clicked');
     var isLiked = event.target.previousElementSibling == null;
-    var postId = event.target.parentNode.parentNode.dataset['postid'];
+    var postId = event.target.parentNode.dataset['postid'];
     $.ajax({
       method: 'POST',
       data: JSON.stringify({
@@ -59744,9 +59762,11 @@ $(document).ready(function () {
 /***/ (function(module, exports) {
 
 $(document).ready(function () {
-  $('#btn-postdel').on(click, function () {
-    alert('asdasd');
-  });
+  // Delete comment toast
+  $('.comment-del').click(function () {
+    $(".delete_toast").toast('show');
+  }); // Like toast
+  // ...
 });
 
 /***/ }),

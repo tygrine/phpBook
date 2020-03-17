@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <a href="/forum" class="btn btn-outline-primary">Back</a>
     <form action="/forum" enctype="multipart/form-data" method="post">
         @csrf
         <div class="row">

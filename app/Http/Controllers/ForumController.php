@@ -29,8 +29,14 @@ class ForumController extends Controller
     }
 
     public function show($post_id)
-    {
+    {   
         $post = Post::find($post_id);
+
+        // Checks if post id exists in case the URL is manipulated to show an unobtainable post
+        if (is_null($post)){
+            return redirect('forum');
+        }
+
         $post->comments = Comment::query()->where('post_id', $post_id)->orderBy('created_at','desc')->paginate(4);
         return view('posts.show')->with('post', $post);
     }
@@ -47,14 +53,14 @@ class ForumController extends Controller
             'post_description' => $data['post-description'],
         ]);
 
-        return redirect('forum')->with('Success', 'Post created successfully.');
+        return redirect('forum');
     }
 
     public function edit($post_id)
     {
         $post = Post::find($post_id);
 
-        // Checks if authenticated user is the post author to allow an edit
+        // Checks if authenticated user is the post author to allow an edit (accessing edit page)
         if(Auth::User() != $post->user) {
             return redirect()->back();
         }
@@ -68,13 +74,23 @@ class ForumController extends Controller
             'post-title' => 'required',
             'post-description' => 'required',
         ]);
+        
+        // Checks if authenticated user is the post author to allow an edit (on form submission)
+        $post = Post::find($post_id);
 
-        auth()->user()->posts()->update([
+        if(Auth::User() != $post->user) {
+            return redirect()->back();
+        } else {
+
+        auth()->user()->posts()->find($post_id)->update([
             'post_title' => $data['post-title'],
             'post_description' => $data['post-description'],
+
         ]);
 
-        return redirect('forum')->with('Success', 'Post updated successfully.');
+        }
+
+        return redirect('forum');
     }
 
     public function delete($post_id)
@@ -88,7 +104,7 @@ class ForumController extends Controller
 
         $post->delete();
 
-        return redirect('forum')->with(['Success' => 'Post deleted successfully']);
+        return redirect('forum');
     }
 
     public function like(Request $request)

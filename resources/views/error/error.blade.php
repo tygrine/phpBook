@@ -5,10 +5,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{$user->profile->title}}</div>
+                <div class="card-header">Error</div>
 
                 <div class="card-body">
-                    {{$user->profile->description}}
+                    An error has occurred.
                 </div>
             </div>
         </div>

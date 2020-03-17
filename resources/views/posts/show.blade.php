@@ -1,15 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+
+<div class="container" style="position: relative;">
+    <!-- Toasts -->
+    <div id="toast_handler">
+      <div class="delete_toast toast" role="alert" aria-live="assertive" aria-atomic="true" style="position: absolute; top: 0; right: 0;" data-delay="500">
+        <div class="toast-header">
+            <strong class="mr-auto">Success</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body">
+          <i class="fas fa-trash fa-xs"></i> Comment has been deleted.
+        </div>
+      </div>
+    </div>
+  
+    <!-- Content -->
     <a href="/forum" class="btn btn-outline-primary">Back</a>
     @if(Auth::user() == $post->user)
     <a href="/forum/edit/{{$post->id}}" class="btn btn-outline-primary">Edit</a>
-    <a href="/forum/delete/{{$post->id}}" class="btn btn-outline-secondary" data-toggle="modal" data-target="#btn-postdelModal">Delete</a>
+    <a href="#delete" class="btn btn-outline-secondary" data-toggle="modal" data-target="#btn-postdelModal">Delete</a>
     @endif
     <hr>
     <h1>{{$post->post_title}}</h1>
-    <small>Created on {{$post->created_at}} by {{ $post->user->name }}</small>
+    <small>Created on {{$post->created_at}} by {{ $post->user->name }} <div id="postid" style="display:none;">{{$post->id}}</div></small>
     <div class="pb-4"></div>
     <div>
         {{$post->post_description}}
@@ -24,7 +41,7 @@
                 <p><strong>{{$comment->user->name}}</strong> <small>Commented on: {{$comment->created_at}}</small></p>
                 <p>{{$comment->comment_description}}
                 @if(Auth::user() == $comment->user)
-                    <a href="/comments/delete/{{$comment->id}}" class="btn btn-outline-secondary btn-sm float-right">Delete Comment</a>
+                    <a href="/comments/delete/{{$comment->id}}" class="comment-del btn btn-outline-secondary btn-sm float-right">Delete Comment</a>
                 @endif
                 </div>
                 </p>
@@ -35,7 +52,7 @@
     </div>
     <div class="row">
         <div id="comment-form" class="mx-auto col-11">
-        <form action="/comments/{{$post->id}}" enctype="multipart/form-data" method="post">
+        <form id="comment" action="/comments/{{$post->id}}" enctype="multipart/form-data" method="post">
             @csrf
                 <div class="row">
                     <label for="comment-user"><strong>{{Auth::user()->name}}</strong></label>
@@ -52,7 +69,7 @@
                 </div>
 
                 <div class="row">
-                    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                    <button type="submit" class="btn btn-outline-primary comment_submit">Submit</button>
                 </div>
             </form>
         </div>
@@ -77,7 +94,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button id="btn-postdel" type="button" class="btn btn-outline-danger">Delete</button>
+          <a id="btn-postdel" role="button" type="button" class="btn btn-outline-danger" href="/forum/delete/{{$post->id}}">Delete</a>
         </div>
       </div>
     </div>

@@ -7,17 +7,54 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Fontawesome Icons
+$fa-font-path: "../webfonts";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+@import '~@fortawesome/fontawesome-free/scss/regular.scss';
+
+.bg-nav-lightblue {
+    background-color: #EFF7FF !important;
+}
 
 .logo {
-        max-height: 50px;
-        max-width: 50px;
+        max-height: 160px;
+        max-width: 100px;
     }
 
 .logo-text {
         line-height: 50px;
     }
 
+.card-header {
+    background-color: #EFF7FF;
+    }
+
+.card-body {
+    display: block;
+    display: -webkit-box;
+    max-height: 300px;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 0.50rem;
+    padding-bottom: 0.30rem;
+}
+
+.card-footer{
+    background-color: white;
+    margin-top: 10px;
+}
+
 textarea {
     min-height: 50px;
     max-height: 200px;
+    } 
+
+.fa-2x {
+    vertical-align: middle;
+    font-size: 10px;
+    padding-top: 8px;
+    color: #8ecaff;
 }

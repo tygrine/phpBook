@@ -15,10 +15,13 @@ class NotificationController extends Controller
 
     public function read(Request $request){
         Auth::user()->unreadNotifications()->find($request->id)->MarkAsRead();
-        return 'read';
     }
 
     public function clear(Request $request){
-        //
+        $user = Auth::user();
+
+        foreach ($user->unreadNotifications as $notification) {
+        $notification->markAsRead();
+        }
     }
 }

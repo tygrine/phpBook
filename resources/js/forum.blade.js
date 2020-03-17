@@ -1,5 +1,18 @@
 $(document).ready(function(){
 
+    //Every 2nd post has a blue border
+    $(".card:odd").addClass('border-info');
+
+    $(".add-post").popover('show');
+    $('body').on('click', function (e) {
+        //only buttons
+        if ($(e.target).data('toggle') !== 'popover'
+            && $(e.target).parents('.popover.in').length === 0) { 
+            $('[data-toggle="popover"]').popover('hide');
+            $('[data-toggle="popover"]').popover('disable')
+        }
+    });   
+
     $.ajaxSetup({
         beforeSend: function(xhr, type) {
             if (!type.crossDomain) {
@@ -10,9 +23,8 @@ $(document).ready(function(){
 
     $('.like').on('click', function(event){
         event.preventDefault();
-        console.log('clicked');
         var isLiked = event.target.previousElementSibling == null;
-        var postId = event.target.parentNode.parentNode.dataset['postid'];
+        var postId = event.target.parentNode.dataset['postid'];
         
         $.ajax({
             method: 'POST',

@@ -45,6 +45,6 @@ class CommentsController extends Controller
             return redirect()->back();
         }
         $comment->delete();
-        return redirect()->back();;
+        return redirect()->back();
     }
 }

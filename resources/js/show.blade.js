@@ -1,5 +1,12 @@
 $(document).ready(function(){
-    $('#btn-postdel').on(click, function(){
-        alert('asdasd');
-    })
+    
+    // Delete comment toast
+    $('.comment-del').click(function () {
+        $(".delete_toast").toast('show');
+    });
+
+     // Like toast
+
+     // ...
+     
 });
