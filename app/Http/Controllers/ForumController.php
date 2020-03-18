@@ -142,7 +142,7 @@ class ForumController extends Controller
             return $this->notify($post_id, $is_like);
         }
 
-        dd($request['isLiked'], $is_like, $user->id);
+        dd($request['isLiked'], $is_like, $post_id, $user->id);
     }
 
     public function notify($post_id, $is_like)

@@ -24,4 +24,5 @@ class NotificationController extends Controller
         $notification->markAsRead();
         }
     }
+
 }
