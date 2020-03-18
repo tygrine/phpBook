@@ -44,3 +44,6 @@ Route::post('/notification/clear', 'NotificationController@clear');
 
 //Error
 Route::get('/error', 'HomeController@error')->name('error');
+
+Route::mixin(new \Laravel\Ui\AuthRouteMethods());
+Route::auth(['verify' => true]);
